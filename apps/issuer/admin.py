@@ -38,7 +38,7 @@ class BadgeClassAdmin(ModelAdmin):
         (None, {'fields': ('image', 'name', 'slug', 'issuer')}),
         ('Criteria', {'fields': ('criteria_text',)}),
         ('JSON', {'fields': ('json',)}),
-        (None, {'fields': ('tags')}),
+        ('Tags', {'fields': ('tags')}),
     )
 
     def badge_image(self, obj):

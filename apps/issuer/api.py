@@ -626,7 +626,7 @@ class IssuerBadgeInstanceList(AbstractIssuerAPIEndpoint):
             instances = current_issuer.badgeinstance_set.filter(revoked=False)
 
         serializer = BadgeInstanceSerializer(
-            instances, context={'request': request}, many=True
+            instances, context={'request': request, 'include_badge_class': True}, many=True
         )
 
         return Response(serializer.data)

@@ -12,6 +12,7 @@ from django.db import models
 from autoslug import AutoSlugField
 import cachemodel
 from jsonfield import JSONField
+from taggit.managers import TaggableManager
 
 from .mixins import ResizeUploadedImage
 
@@ -98,6 +99,7 @@ class AbstractBadgeClass(ResizeUploadedImage, AbstractComponent):
     name = models.CharField(max_length=255)
     slug = AutoSlugField(max_length=255, populate_from='name', unique=True,
                          blank=False, editable=True)
+    tags = TaggableManager()
 
     class Meta:
         abstract = True

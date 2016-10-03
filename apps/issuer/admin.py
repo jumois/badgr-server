@@ -35,10 +35,9 @@ class BadgeClassAdmin(ModelAdmin):
     search_fields = ('name', 'slug', 'issuer__name',)
     fieldsets = (
         ('Metadata', {'fields': ('created_by', 'created_at',), 'classes': ("collapse",)}),
-        (None, {'fields': ('image', 'name', 'slug', 'issuer')}),
+        (None, {'fields': ('image', 'name', 'slug', 'issuer', 'tags')}),
         ('Criteria', {'fields': ('criteria_text',)}),
         ('JSON', {'fields': ('json',)}),
-        ('Tags', {'fields': ('tags')}),
     )
 
     def badge_image(self, obj):

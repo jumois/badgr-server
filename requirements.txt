@@ -78,5 +78,9 @@ pyasn1==0.1.9
 pycparser==2.14
 six==1.9.0
 
-django-taggit
-django-cors-headers
+# tags
+django-taggit==0.21.2
+django-taggit-serializer==0.1.5
+
+# cors
+django-cors-headers==1.2.1

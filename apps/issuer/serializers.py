@@ -9,6 +9,8 @@ from django.db.models import Q
 
 from rest_framework import serializers
 from badgeuser.models import BadgeUser
+from taggit_serializer.serializers import (TagListSerializerField,
+                                           TaggitSerializer)
 
 from mainsite.serializers import WritableJSONField
 from mainsite.utils import installed_apps_list
@@ -111,7 +113,7 @@ class IssuerStaffSerializer(serializers.Serializer):
     editor = serializers.BooleanField()
 
 
-class BadgeClassSerializer(AbstractComponentSerializer):
+class BadgeClassSerializer(TaggitSerializer, AbstractComponentSerializer):
     id = serializers.IntegerField(required=False, read_only=True)
     issuer = serializers.HyperlinkedRelatedField(view_name='issuer_json', read_only=True, lookup_field='slug')
     json = WritableJSONField(max_length=16384, read_only=True, required=False)
@@ -120,6 +122,7 @@ class BadgeClassSerializer(AbstractComponentSerializer):
     slug = serializers.CharField(max_length=255, allow_blank=True, required=False)
     criteria = serializers.CharField(allow_blank=True, required=False, write_only=True)
     recipient_count = serializers.IntegerField(required=False, read_only=True)
+    tags = TagListSerializerField()
 
     def validate_image(self, image):
         # TODO: Make sure it's a PNG (square if possible), and remove any baked-in badge assertion that exists.

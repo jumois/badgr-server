@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     # 'sky_redirects',
     # 'emailtemplates',
     # 'sky_visitor',
+    'taggit',
+    'corsheaders',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -63,6 +66,8 @@ MIDDLEWARE_CLASSES = [
     'badgeuser.middleware.InactiveUserMiddleware',
     # 'mainsite.middleware.TrailingSlashMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'mainsite.urls'
 

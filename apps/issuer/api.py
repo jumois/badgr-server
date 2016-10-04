@@ -547,7 +547,7 @@ class BadgeInstanceList(AbstractIssuerAPIEndpoint):
         if request.data.get('create_notification') is not None:
             data['create_notification'] = True
 
-        serializer = BadgeInstanceSerializer(data=data, context={'request': request})
+        serializer = BadgeInstanceSerializer(data=data, context={'request': request, 'include_badge_class': True})
         serializer.is_valid(raise_exception=True)
 
         serializer.save(

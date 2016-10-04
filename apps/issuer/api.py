@@ -676,7 +676,7 @@ class BadgeInstanceDetail(AbstractIssuerAPIEndpoint):
             - code: 404
               message: Assertion not found or user has inadequate permissions.
         """
-        if request.data.get('revocation_reason') is None:
+        if request.query_params.get('revocation_reason', None) is None:
             raise ValidationError("The parameter revocation_reason is required \
                                   to revoke a badge assertion")
         current_assertion = self.get_object(assertionSlug)
@@ -689,7 +689,7 @@ class BadgeInstanceDetail(AbstractIssuerAPIEndpoint):
 
         current_assertion.revoked = True
         current_assertion.revocation_reason = \
-            request.data.get('revocation_reason')
+            request.query_params.get('revocation_reason')
         current_assertion.image.delete()
         current_assertion.save()
 

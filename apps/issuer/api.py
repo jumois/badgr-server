@@ -413,6 +413,11 @@ class BadgeClassList(AbstractIssuerAPIEndpoint):
               type: string
               paramType: form
               description: A short name for the new BadgeClass
+            - name: description
+              required: true
+              type: string
+              paramType: form
+              description: A short description for the new BadgeClass
             - name: slug
               required: false
               type: string
@@ -428,6 +433,11 @@ class BadgeClassList(AbstractIssuerAPIEndpoint):
               required: true
               paramType: form
               description: Either a URL of a remotely hosted criteria page or a text string describing the criteria.
+            - name: tags
+              type: list
+              required: true
+              paramType: form
+              description: List of tags for the BadgeClass.
         """
 
         # Step 1: Locate the issuer

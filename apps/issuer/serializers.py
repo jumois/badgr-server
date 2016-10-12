@@ -155,7 +155,8 @@ class BadgeClassSerializer(TaggitSerializer, AbstractComponentSerializer):
             'type': 'BadgeClass',
             'name': validated_data.get('name'),
             'description': validated_data.pop('description'),
-            'issuer': validated_data.get('issuer').get_full_url()
+            'issuer': validated_data.get('issuer').get_full_url(),
+            'tags': validated_data.pop('tags')
         }
 
         try:

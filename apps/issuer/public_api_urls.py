@@ -2,14 +2,14 @@ from django.conf.urls import patterns, url
 
 from .public_api import (IssuerJson, IssuerImage, BadgeClassJson,
                          BadgeClassImage, BadgeClassCriteria, BadgeInstanceJson,
-                         BadgeInstanceImage)
-
+                         BadgeInstanceImage, IssuerBadgeInstanceList)
 
 urlpatterns = patterns(
     'issuer.public_api_views',
     # TODO: Handle url(r'^$),
     url(r'^/issuers/(?P<slug>[-\w]+)$', IssuerJson.as_view(), name='issuer_json'),
     url(r'^/issuers/(?P<slug>[-\w]+)/image$', IssuerImage.as_view(), name='issuer_image'),
+    url(r'^/issuers/(?P<issuerSlug>[-\w]+)/assertions$', IssuerBadgeInstanceList.as_view(), name='issuer_instance_list'),
 
     url(r'^/badges/(?P<slug>[-\w]+)$', BadgeClassJson.as_view(), name='badgeclass_json'),
     url(r'^/badges/(?P<slug>[-\w]+)/image', BadgeClassImage.as_view(), name='badgeclass_image'),

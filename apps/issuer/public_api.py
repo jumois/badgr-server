@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from .api import AbstractIssuerAPIEndpoint
 from .models import Issuer, BadgeClass, BadgeInstance
 from .renderers import BadgeInstanceHTMLRenderer, BadgeClassCriteriaHTMLRenderer
+from .serializers import BadgeInstanceSerializer
 
 import utils
 import badgrlog
@@ -198,4 +199,45 @@ class BadgeInstanceImage(ComponentPropertyDetailView):
 
             self.log(current_object)
             return redirect(getattr(current_object, self.prop).url)
+
+
+class IssuerBadgeInstanceList(JSONComponentView):
+    """
+    Retrieve assertions by a recipient identifier within one issuer
+    """
+    queryset = Issuer.objects.all().select_related('badgeinstances')
+    model = Issuer
+
+    def get(self, request, issuerSlug):
+        """
+        Get a list of assertions issued to one recpient by one issuer.
+        ---
+        serializer: BadgeInstanceSerializer
+        parameters:
+            - name: issuerSlug
+              required: true
+              type: string
+              paramType: path
+              description: slug of the Issuer to search for assertions under
+            - name: recipient
+              required: true 
+              type: string
+              paramType: query
+              description: URL-encoded email address of earner to search by
+        """
+        current_issuer = self.get_object(issuerSlug)
+        recipient_identifier = request.query_params.get('recipient')
+
+        if current_issuer is None or recipient_identifier is None:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        instances = current_issuer.badgeinstance_set.filter(
+            recipient_identifier=recipient_identifier,
+            revoked=False)
+
+        serializer = BadgeInstanceSerializer(
+            instances, context={'request': request, 'include_badge_class': True}, many=True
+        )
+
+	return Response(serializer.data)
 
